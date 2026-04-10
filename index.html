@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Студия 42 | Одностраничный сайт</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            background-color: #fefefe;
+            color: #1e2a3e;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .main-header {
+            background-color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(2px);
+            background-color: rgba(255, 255, 255, 0.96);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #3a0ca3, #4cc9f0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            transition: transform 0.3s ease, filter 0.2s;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .logo:hover {
+            transform: scale(1.05) rotate(-1deg);
+            filter: drop-shadow(0 4px 8px rgba(58, 12, 163, 0.2));
+            background: linear-gradient(135deg, #f72585, #7209b7);
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            font-weight: 500;
+            color: #1e2a3e;
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2.5px;
+            background: linear-gradient(90deg, #3a0ca3, #f72585);
+            transition: width 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border-radius: 2px;
+        }
+
+        .nav-link:hover {
+            color: #3a0ca3;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .section {
+            padding: 60px 0;
+            border-bottom: 1px solid #eef2f6;
+        }
+        .section:last-of-type {
+            border-bottom: none;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #3a0ca3, #f72585);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero {
+            padding-top: 20px;
+        }
+        .slider-section {
+            margin: 1rem 0 2rem;
+        }
+        .slider-container {
+            position: relative;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
+            background: #f1f3f5;
+        }
+        .slides {
+            position: relative;
+            min-height: 380px;
+        }
+        .slide {
+            display: none;
+            animation: fadeSlide 0.5s ease;
+        }
+        .slide.active {
+            display: block;
+        }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateX(12px);}
+            to { opacity: 1; transform: translateX(0);}
+        }
+        .slide-content {
+            padding: 3rem 2rem;
+            text-align: center;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            border-radius: 1.5rem;
+        }
+        .slide-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        .slide-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            opacity: 0.95;
+        }
+        .slide-1 .slide-content { background: linear-gradient(120deg, #3a0ca3, #4cc9f0); }
+        .slide-2 .slide-content { background: linear-gradient(120deg, #f72585, #b5179e); }
+        .slide-3 .slide-content { background: linear-gradient(120deg, #7209b7, #3a0ca3); }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 60px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #1e2a3e;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .slider-btn:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.05);
+            color: #3a0ca3;
+        }
+        .btn-prev { left: 20px; }
+        .btn-next { right: 20px; }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: #cbd5e1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .dot.active {
+            background-color: #3a0ca3;
+            width: 28px;
+            border-radius: 12px;
+        }
+
+        .projects-grid {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .project-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            width: 300px;
+            transition: transform 0.25s;
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+        }
+        .project-img {
+            height: 180px;
+            background: linear-gradient(145deg, #c084fc, #a78bfa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+        .project-card h3, .project-card p {
+            padding: 0.8rem 1rem;
+        }
+        .project-card h3 {
+            font-size: 1.3rem;
+        }
+
+        .services-grid {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .service-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            flex: 1;
+            min-width: 220px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.25s, box-shadow 0.3s;
+            text-align: center;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -12px rgba(58, 12, 163, 0.2);
+        }
+        .service-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .contacts-info {
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        .contacts-info p {
+            margin: 1rem 0;
+        }
+        .contacts-info a {
+            color: #3a0ca3;
+            text-decoration: none;
+            border-bottom: 1px dashed;
+        }
+
+        .main-footer {
+            background: #0f172a;
+            color: #e2e8f0;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-list {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1.2rem;
+            }
+            .slide-content {
+                padding: 2rem 1.2rem;
+                min-height: 320px;
+            }
+            .slide-content h2 {
+                font-size: 1.8rem;
+            }
+            .slide-content p {
+                font-size: 1rem;
+            }
+            .slider-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1.4rem;
+            }
+            .projects-grid, .services-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            .slide-content h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-inner">
+            <div class="logo" id="interactiveLogo">✨ Студия 42</div>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-link">Главная</a></li>
+                    <li><a href="#projects" class="nav-link">Проекты</a></li>
+                    <li><a href="#services" class="nav-link">Услуги</a></li>
+                    <li><a href="#contacts" class="nav-link">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="section hero">
+            <div class="container">
+                <div class="slider-section">
+                    <div class="slider-container">
+                        <div class="slides" id="slidesContainer">
+                            <div class="slide slide-1 active">
+                                <div class="slide-content">
+                                    <h2>Простые решения</h2>
+                                    <p>Никакого хайпа — только то, что реально работает.</p>
+                                </div>
+                            </div>
+                            <div class="slide slide-2">
+                                <div class="slide-content">
+                                    <h2>Аккуратная вёрстка</h2>
+                                    <p>Сайт, который приятно открыть с телефона или ноутбука.</p>
+                                </div>
+                            </div>
+                            <div class="slide slide-3">
+                                <div class="slide-content">
+                                    <h2>Понятный код</h2>
+                                    <p>Без магии, просто HTML, CSS и немного JS.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="slider-btn btn-prev" id="prevSlide" aria-label="Предыдущий слайд">❮</button>
+                        <button class="slider-btn btn-next" id="nextSlide" aria-label="Следующий слайд">❯</button>
+                    </div>
+                    <div class="slider-dots" id="sliderDots"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title">Наши проекты</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-img">🎨</div>
+                        <h3>Лендинг для студии</h3>
+                        <p>Современный дизайн, адаптив, анимация.</p>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-img">📱</div>
+                        <h3>Мобильное приложение</h3>
+                        <p>Прототип и интерфейс на Flutter.</p>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-img">🌐</div>
+                        <h3>Корпоративный портал</h3>
+                        <p>Удобная навигация и админ-панель.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="section">
+            <div class="container">
+                <h2 class="section-title">Что мы предлагаем</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🎨</div>
+                        <h3>Веб-дизайн</h3>
+                        <p>Создаём уникальный стиль, который запоминается.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">⚡</div>
+                        <h3>Frontend-разработка</h3>
+                        <p>Чистый код, адаптив, анимации.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">📈</div>
+                        <h3>SEO-оптимизация</h3>
+                        <p>Помогаем сайту быть заметным в поиске.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacts" class="section">
+            <div class="container">
+                <h2 class="section-title">Свяжитесь с нами</h2>
+                <div class="contacts-info">
+                    <p>📧 Email: <a href="mailto:hello@studio42.ru">hello@studio42.ru</a></p>
+                    <p>📞 Телефон: +7 (999) 123-45-67</p>
+                    <p>📍 Telegram: @studio42_support</p>
+                    <p>✨ Или просто напишите нам в чат — ответим в течение дня.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>© 2025 Студия 42 — учебный проект. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevSlide');
+            const nextBtn = document.getElementById('nextSlide');
+            const dotsContainer = document.getElementById('sliderDots');
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+
+            function updateSlider(index) {
+                if (index < 0) index = totalSlides - 1;
+                if (index >= totalSlides) index = 0;
+                currentIndex = index;
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === currentIndex);
+                });
+                const dots = document.querySelectorAll('.dot');
+                if (dots.length) {
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === currentIndex);
+                    });
+                }
+            }
+
+            function createDots() {
+                if (!dotsContainer) return;
+                dotsContainer.innerHTML = '';
+                for (let i = 0; i < totalSlides; i++) {
+                    const dot = document.createElement('div');
+                    dot.classList.add('dot');
+                    if (i === currentIndex) dot.classList.add('active');
+                    dot.addEventListener('click', () => updateSlider(i));
+                    dotsContainer.appendChild(dot);
+                }
+            }
+
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', () => updateSlider(currentIndex - 1));
+                nextBtn.addEventListener('click', () => updateSlider(currentIndex + 1));
+            }
+            createDots();
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    updateSlider(currentIndex - 1);
+                    e.preventDefault();
+                } else if (e.key === 'ArrowRight') {
+                    updateSlider(currentIndex + 1);
+                    e.preventDefault();
+                }
+            });
+
+            const logoElement = document.getElementById('interactiveLogo');
+            if (logoElement) {
+                logoElement.addEventListener('click', () => {
+                    logoElement.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        logoElement.style.transform = '';
+                    }, 150);
+                });
+            }
+
+            document.querySelectorAll('.nav-link').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId && targetId.startsWith('#')) {
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            e.preventDefault();
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
